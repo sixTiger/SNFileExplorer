@@ -75,7 +75,7 @@ static NSString *SNFileCellID = @"SNFileCellID";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     SNFileModel *fileModel = self.fileModel.subFileModels[indexPath.row];
-    if (fileModel.fileType == XXBFileTypeFinder) {
+    if (fileModel.fileType == SNFileTypeFinder) {
         self.fileModel = self.fileModel.subFileModels[indexPath.row];
         [self reloadResource];
     }

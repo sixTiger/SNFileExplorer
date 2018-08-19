@@ -9,10 +9,10 @@
 #import <Foundation/Foundation.h>
 
 typedef enum : NSUInteger {
-    XXBFileTypeUnknown,     //文件不存在
-    XXBFileTypeFile,        //文件
-    XXBFileTypeFinder,      //文件夹
-} XXBFileType;
+    SNFileTypeUnknown,     //文件不存在
+    SNFileTypeFile,        //文件
+    SNFileTypeFinder,      //文件夹
+} SNFileType;
 
 
 /**
@@ -37,7 +37,7 @@ extern BOOL isEmpty_XXBFE(id value);
  @param path 文件得路径
  @return 当前文件的类型
  */
-extern XXBFileType getFileType_XXBFE(NSString *path);
+extern SNFileType getFileType_XXBFE(NSString *path);
 
 /**
  获取文件对应得Emoji
@@ -45,7 +45,7 @@ extern XXBFileType getFileType_XXBFE(NSString *path);
  @param fileType 文件得类型
  @return Emoji
  */
-extern NSString* getEmojiString_XXBFE(XXBFileType fileType);
+extern NSString* getEmojiString_XXBFE(SNFileType fileType);
 
 /**
  获取当前路径得所有文件

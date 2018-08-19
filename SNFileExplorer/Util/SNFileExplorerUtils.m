@@ -33,19 +33,19 @@ extern BOOL isEmpty_XXBFE(id value) {
     return NO;
 }
 
-extern XXBFileType getFileType_XXBFE(NSString *path) {
+extern SNFileType getFileType_XXBFE(NSString *path) {
     BOOL isDir = NO;
     BOOL isFileExist = [[NSFileManager defaultManager] fileExistsAtPath:path isDirectory:&isDir];
     if (!isFileExist) {
         //文件不存在
-        return XXBFileTypeUnknown;
+        return SNFileTypeUnknown;
     } else {
         if (isDir) {
             //是文件夹
-            return XXBFileTypeFinder;
+            return SNFileTypeFinder;
         } else {
             //不是文件夹
-            return XXBFileTypeFile;
+            return SNFileTypeFile;
         }
     }
 }
@@ -56,16 +56,16 @@ extern XXBFileType getFileType_XXBFE(NSString *path) {
  @param fileType 文件得类型
  @return Emoji
  */
-extern NSString* getEmojiString_XXBFE(XXBFileType fileType) {
+extern NSString* getEmojiString_XXBFE(SNFileType fileType) {
     NSString *emojiString = @"🗂";
     switch (fileType) {
-        case XXBFileTypeUnknown:
+        case SNFileTypeUnknown:
             emojiString = @"❓";
             break;
-        case XXBFileTypeFile:
+        case SNFileTypeFile:
             emojiString = @"📑";
             break;
-        case XXBFileTypeFinder:
+        case SNFileTypeFinder:
             emojiString = @"🗂";
             break;
             

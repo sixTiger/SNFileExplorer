@@ -39,7 +39,7 @@ typedef enum : NSUInteger {
 /**
  当前模型的文件类型
  */
-@property(nonatomic, assign) XXBFileType                        fileType;
+@property(nonatomic, assign) SNFileType                         fileType;
 
 
 /**
