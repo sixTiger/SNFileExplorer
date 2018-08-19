@@ -1,5 +1,5 @@
 //
-//  XXBFileCell.h
+//  SNFileCell.h
 //  XXBExplorerDemo
 //
 //  Created by xiaobing5 on 2018/5/22.
@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "XXBFileModel.h"
+#import "SNFileModel.h"
 
-@interface XXBFileCell : UITableViewCell
+@interface SNFileCell : UITableViewCell
 
-@property(nonatomic, strong) XXBFileModel    *fileModel;
+@property(nonatomic, strong) SNFileModel    *fileModel;
 @end

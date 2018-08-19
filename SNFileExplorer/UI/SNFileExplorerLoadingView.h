@@ -1,5 +1,5 @@
 //
-//  XXBFileExplorerLoadingView.h
+//  SNFileExplorerLoadingView.h
 //  XXBExplorerDemo
 //
 //  Created by xiaobing5 on 2018/5/22.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface XXBFileExplorerLoadingView : UIView
+@interface SNFileExplorerLoadingView : UIView
 
 @property(nonatomic) BOOL   hidesWhenStopped;
 - (void)startAnimating;

@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-#import "XXBFileExplorerController.h"
+#import "SNFileExplorer.h"
 
 @interface ViewController ()
 
@@ -30,7 +30,7 @@
 - (IBAction)openFinder:(id)sender {
     NSString *rootPath = @"/Users/xiaobing5/Desktop";
     rootPath = NSHomeDirectory();
-    XXBFileExplorerController *fileExplorerController = [[XXBFileExplorerController alloc] initWithRootPath:rootPath];
+    SNFileExplorerController *fileExplorerController = [[SNFileExplorerController alloc] initWithRootPath:rootPath];
     [self.navigationController pushViewController:fileExplorerController animated:YES];
 }
 

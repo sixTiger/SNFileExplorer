@@ -6,7 +6,7 @@
 //  Copyright © 2018年 xiaobing5. All rights reserved.
 //
 
-#import "XXBFileExplorerUtils.h"
+#import "SNFileExplorerUtils.h"
 
 /**
  判断对象是否为空
@@ -100,6 +100,6 @@ extern BOOL deleteFail_XXBFE(NSString *path, NSError **error) {
     return [fileManager removeItemAtPath:path error:error];
 }
 
-@implementation XXBFileExplorerUtils
+@implementation SNFileExplorerUtils
 
 @end

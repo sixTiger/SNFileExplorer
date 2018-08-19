@@ -7,24 +7,24 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "XXBFileExplorerUtils.h"
+#import "SNFileExplorerUtils.h"
 
 typedef enum : NSUInteger {
-    XXBFileModelTypeDefault,
-    XXBFileModelTypeRootFile,
-} XXBFileModelType;
+    SNFileModelTypeDefault,
+    SNFileModelTypeRootFile,
+} SNFileModelType;
 
-@interface XXBFileModel : NSObject
+@interface SNFileModel : NSObject
 
 /**
  父级目录信息
  */
-@property(nonatomic, weak) XXBFileModel                         *superFileModel;
+@property(nonatomic, weak) SNFileModel                         *superFileModel;
 
 /**
  当前模型的类型
  */
-@property(nonatomic, assign) XXBFileModelType                   modelType;
+@property(nonatomic, assign) SNFileModelType                   modelType;
 
 /**
  当前模型的名字
@@ -45,9 +45,9 @@ typedef enum : NSUInteger {
 /**
  子目录
  */
-@property(nonatomic, strong) NSMutableArray<XXBFileModel *>     *subFileModels;
+@property(nonatomic, strong) NSMutableArray<SNFileModel *>     *subFileModels;
 
-- (instancetype)initWithPath:(NSString *)filePath andName:(NSString *)fileName andSuperFileMode:(XXBFileModel *)superFileModel;
+- (instancetype)initWithPath:(NSString *)filePath andName:(NSString *)fileName andSuperFileMode:(SNFileModel *)superFileModel;
 
 /**
  刷新资源

@@ -65,6 +65,6 @@ extern NSArray* getSubFilesFromPath_XXBFE(NSString *path, NSError **error);
  */
 extern BOOL deleteFail_XXBFE(NSString *path, NSError **error);
 
-@interface XXBFileExplorerUtils : NSObject
+@interface SNFileExplorerUtils : NSObject
 
 @end

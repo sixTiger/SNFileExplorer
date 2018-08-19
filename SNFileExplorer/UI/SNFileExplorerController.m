@@ -6,24 +6,24 @@
 //  Copyright © 2018年 xiaobing5. All rights reserved.
 //
 
-#import "XXBFileExplorerController.h"
-#import "XXBFileModel.h"
-#import "XXBFileCell.h"
-#import "XXBFileExplorerLoadingView.h"
+#import "SNFileExplorerController.h"
+#import "SNFileModel.h"
+#import "SNFileCell.h"
+#import "SNFileExplorerLoadingView.h"
 
-@interface XXBFileExplorerController ()<UITableViewDelegate, UITableViewDataSource>
+@interface SNFileExplorerController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property(nonatomic, weak) UITableView                      *tableView;
-@property(nonatomic, weak) XXBFileExplorerLoadingView       *loadingView;
-@property(nonatomic, strong) XXBFileModel                   *rootFileModel;
-@property(nonatomic, strong) XXBFileModel                   *fileModel;
+@property(nonatomic, weak) SNFileExplorerLoadingView        *loadingView;
+@property(nonatomic, strong) SNFileModel                    *rootFileModel;
+@property(nonatomic, strong) SNFileModel                    *fileModel;
 
 
 @end
 
-@implementation XXBFileExplorerController
+@implementation SNFileExplorerController
 
-static NSString *XXBFileCellID = @"XXBFileCellID";
+static NSString *SNFileCellID = @"SNFileCellID";
 
 - (instancetype)initWithHomePath {
     return [self initWithRootPath:NSHomeDirectory()];
@@ -31,7 +31,7 @@ static NSString *XXBFileCellID = @"XXBFileCellID";
 
 - (instancetype)initWithRootPath:(NSString *)rootpath {
     if (self = [super init]) {
-        self.rootFileModel = [[XXBFileModel alloc] initWithPath:rootpath andName:@"ROOT" andSuperFileMode:nil];
+        self.rootFileModel = [[SNFileModel alloc] initWithPath:rootpath andName:@"ROOT" andSuperFileMode:nil];
         self.fileModel = self.rootFileModel;
     }
     return self;
@@ -47,14 +47,14 @@ static NSString *XXBFileCellID = @"XXBFileCellID";
     self.view.backgroundColor = [UIColor lightGrayColor];
     UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [tableView registerClass:[XXBFileCell class] forCellReuseIdentifier:XXBFileCellID];
+    [tableView registerClass:[SNFileCell class] forCellReuseIdentifier:SNFileCellID];
     tableView.rowHeight = 60;
     tableView.delegate = self;
     tableView.dataSource = self;
     [self.view addSubview:tableView];
     _tableView = tableView;
     
-    XXBFileExplorerLoadingView *loadingView = [[XXBFileExplorerLoadingView alloc] initWithFrame:self.view.bounds];
+    SNFileExplorerLoadingView *loadingView = [[SNFileExplorerLoadingView alloc] initWithFrame:self.view.bounds];
     [self.view addSubview:loadingView];
     loadingView.autoresizingMask = (1 << 6) - 1;
     loadingView.hidesWhenStopped = YES;
@@ -74,7 +74,7 @@ static NSString *XXBFileCellID = @"XXBFileCellID";
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    XXBFileModel *fileModel = self.fileModel.subFileModels[indexPath.row];
+    SNFileModel *fileModel = self.fileModel.subFileModels[indexPath.row];
     if (fileModel.fileType == XXBFileTypeFinder) {
         self.fileModel = self.fileModel.subFileModels[indexPath.row];
         [self reloadResource];
@@ -84,7 +84,7 @@ static NSString *XXBFileCellID = @"XXBFileCellID";
 #pragma mark - UITableViewDataSource
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    XXBFileCell *cell = (XXBFileCell *)[tableView dequeueReusableCellWithIdentifier:XXBFileCellID];
+    SNFileCell *cell = (SNFileCell *)[tableView dequeueReusableCellWithIdentifier:SNFileCellID];
     cell.backgroundColor = [UIColor colorWithRed:arc4random_uniform(255)/255.0 green:arc4random_uniform(255)/255.0 blue:arc4random_uniform(255)/255.0 alpha:0.5];
     cell.fileModel = self.fileModel.subFileModels[indexPath.row];
     return cell;
@@ -124,16 +124,30 @@ static NSString *XXBFileCellID = @"XXBFileCellID";
 }
 
 - (void)deleteFileWithCellIndexpath:(NSIndexPath *)indexPath {
-    XXBFileModel *fileModel = self.fileModel.subFileModels[indexPath.row];
-    NSError *error = nil;
-    if (deleteFail_XXBFE(fileModel.currentPath, &error)) {
-        [self.fileModel.subFileModels removeObjectAtIndex:indexPath.row];
-        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationBottom];
-    }
+    SNFileModel *fileModel = self.fileModel.subFileModels[indexPath.row];
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"删除文件?" message:fileModel.currentName preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *deleteFile = [UIAlertAction actionWithTitle:@"删除" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        NSError *error = nil;
+        if (deleteFail_XXBFE(fileModel.currentPath, &error)) {
+            [self.fileModel.subFileModels removeObjectAtIndex:indexPath.row];
+            [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationBottom];
+        }
+    }];
+    [alertController addAction:deleteFile];
+    
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    }];
+    [alertController addAction:cancel];
+    
+    [self presentViewController:alertController animated:YES completion:^{
+        
+    }];
 }
 
+
 - (void)shareFileWithCellIndexpath:(NSIndexPath *)indexPath {
-    XXBFileModel *fileModel = self.fileModel.subFileModels[indexPath.row];
+    SNFileModel *fileModel = self.fileModel.subFileModels[indexPath.row];
     NSURL *url = [NSURL fileURLWithPath:fileModel.currentPath];
     NSArray *items = [NSArray arrayWithObject:url];
     UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:items applicationActivities:nil];

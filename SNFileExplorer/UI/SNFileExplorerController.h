@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface XXBFileExplorerController : UIViewController
+@interface SNFileExplorerController : UIViewController
 
 - (instancetype)initWithHomePath;
 

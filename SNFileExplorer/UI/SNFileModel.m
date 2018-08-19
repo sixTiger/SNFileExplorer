@@ -6,19 +6,19 @@
 //  Copyright © 2018年 xiaobing5. All rights reserved.
 //
 
-#import "XXBFileModel.h"
+#import "SNFileModel.h"
 
-@implementation XXBFileModel
+@implementation SNFileModel
 
-- (instancetype)initWithPath:(NSString *)filePath andName:(NSString *)fileName andSuperFileMode:(XXBFileModel *)superFileModel {
+- (instancetype)initWithPath:(NSString *)filePath andName:(NSString *)fileName andSuperFileMode:(SNFileModel *)superFileModel {
     if (self = [super init]) {
         self.superFileModel = superFileModel;
         self.currentName = fileName;
         self.currentPath = filePath;
         if (isNull_XXBFE(superFileModel)) {
-            self.modelType = XXBFileModelTypeRootFile;
+            self.modelType = SNFileModelTypeRootFile;
         } else {
-            self.modelType = XXBFileModelTypeDefault;
+            self.modelType = SNFileModelTypeDefault;
         }
         self.fileType = getFileType_XXBFE(filePath);
     }
@@ -38,7 +38,7 @@
         NSArray *subFileContentArray = getSubFilesFromPath_XXBFE(self.currentPath, &error);
         for (NSString *subFileName in subFileContentArray) {
             NSString *subFilePath = [self.currentPath stringByAppendingPathComponent:subFileName];
-            XXBFileModel *fileModel = [[XXBFileModel alloc] initWithPath:subFilePath andName:subFileName andSuperFileMode:self];
+            SNFileModel *fileModel = [[SNFileModel alloc] initWithPath:subFilePath andName:subFileName andSuperFileMode:self];
             [filesArray addObject:fileModel];
         }
         dispatch_async(dispatch_get_main_queue(), ^{

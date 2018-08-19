@@ -1,20 +1,20 @@
 //
-//  XXBFileCell.m
+//  SNFileCell.m
 //  XXBExplorerDemo
 //
 //  Created by xiaobing5 on 2018/5/22.
 //  Copyright © 2018年 xiaobing5. All rights reserved.
 //
 
-#import "XXBFileCell.h"
+#import "SNFileCell.h"
 
-@interface XXBFileCell()
+@interface SNFileCell()
 
 @property(nonatomic, weak) UILabel      *emojiLabel;
 @property(nonatomic, weak) UILabel      *messageLabel;
 @end
 
-@implementation XXBFileCell
+@implementation SNFileCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
@@ -25,7 +25,7 @@
     [super setSelected:selected animated:animated];
 }
 
-- (void)setFileModel:(XXBFileModel *)fileModel {
+- (void)setFileModel:(SNFileModel *)fileModel {
     _fileModel = fileModel;
     self.emojiLabel.text = getEmojiString_XXBFE(fileModel.fileType);
     self.messageLabel.text = fileModel.currentName;
