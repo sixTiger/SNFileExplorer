@@ -1,0 +1,38 @@
+{
+  "name": "SNFileExplorer",
+  "requires_arc": true,
+  "version": "0.0.1",
+  "summary": "20180819",
+  "homepage": "https://github.com/sixTiger/XXBExplorer",
+  "license": "MIT",
+  "authors": {
+    "杨小兵": "xiaobing5@staff.sina.com.cn"
+  },
+  "platforms": {
+    "ios": "7.0"
+  },
+  "source": {
+    "git": "https://github.com/sixTiger/XXBExplorer.git",
+    "tag": "0.0.1"
+  },
+  "public_header_files": "SNFileExplorer/SNFileExplorer.h",
+  "source_files": "SNFileExplorer/SNFileExplorer.h",
+  "subspecs": [
+    {
+      "name": "UI",
+      "platforms": {
+        "ios": "7.0"
+      },
+      "source_files": "SNFileExplorer/UI/*.{h,m}",
+      "public_header_files": "SNFileExplorer/UI/SNFileExplorerController.h"
+    },
+    {
+      "name": "Util",
+      "platforms": {
+        "ios": "7.0"
+      },
+      "source_files": "SNFileExplorer/Util/*.{h,m}",
+      "public_header_files": "SNFileExplorer/Util/*.h"
+    }
+  ]
+}

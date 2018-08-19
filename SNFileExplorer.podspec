@@ -15,13 +15,12 @@ Pod::Spec.new do |s|
 
   s.subspec 'UI' do |ss|
     ss.ios.deployment_target = '7.0'
-    ss.source_files = 'SNFileExplorer/UI.{h,m}'
+    ss.source_files = 'SNFileExplorer/UI/*.{h,m}'
     ss.public_header_files = 'SNFileExplorer/UI/SNFileExplorerController.h'
   end
 
   s.subspec 'Util' do |ss|
     ss.ios.deployment_target = '7.0'
-    ss.dependency 'SNFileExplorer/Util'
     ss.source_files = 'SNFileExplorer/Util/*.{h,m}'
     ss.public_header_files = 'SNFileExplorer/Util/*.h'
   end

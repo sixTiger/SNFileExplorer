@@ -7,11 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		780E84392129B4D6001E98B0 /* SNFileExplorerUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 780E84312129B4D6001E98B0 /* SNFileExplorerUtils.m */; };
-		780E843A2129B4D6001E98B0 /* SNFileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 780E84342129B4D6001E98B0 /* SNFileCell.m */; };
-		780E843B2129B4D6001E98B0 /* SNFileExplorerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 780E84352129B4D6001E98B0 /* SNFileExplorerController.m */; };
-		780E843C2129B4D6001E98B0 /* SNFileModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 780E84372129B4D6001E98B0 /* SNFileModel.m */; };
-		780E843D2129B4D6001E98B0 /* SNFileExplorerLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 780E84382129B4D6001E98B0 /* SNFileExplorerLoadingView.m */; };
 		785B0F8020B3E77F0003162B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 785B0F7F20B3E77F0003162B /* AppDelegate.m */; };
 		785B0F8320B3E77F0003162B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 785B0F8220B3E77F0003162B /* ViewController.m */; };
 		785B0F8620B3E77F0003162B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 785B0F8420B3E77F0003162B /* Main.storyboard */; };
@@ -23,17 +18,6 @@
 
 /* Begin PBXFileReference section */
 		16988163A978E19675F8F48D /* Pods-XXBExplorerDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XXBExplorerDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-XXBExplorerDemo/Pods-XXBExplorerDemo.release.xcconfig"; sourceTree = "<group>"; };
-		780E842F2129B4D6001E98B0 /* SNFileCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNFileCell.h; sourceTree = "<group>"; };
-		780E84302129B4D6001E98B0 /* SNFileExplorerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNFileExplorerController.h; sourceTree = "<group>"; };
-		780E84312129B4D6001E98B0 /* SNFileExplorerUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNFileExplorerUtils.m; sourceTree = "<group>"; };
-		780E84322129B4D6001E98B0 /* SNFileExplorerLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNFileExplorerLoadingView.h; sourceTree = "<group>"; };
-		780E84332129B4D6001E98B0 /* SNFileModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNFileModel.h; sourceTree = "<group>"; };
-		780E84342129B4D6001E98B0 /* SNFileCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNFileCell.m; sourceTree = "<group>"; };
-		780E84352129B4D6001E98B0 /* SNFileExplorerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNFileExplorerController.m; sourceTree = "<group>"; };
-		780E84362129B4D6001E98B0 /* SNFileExplorerUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNFileExplorerUtils.h; sourceTree = "<group>"; };
-		780E84372129B4D6001E98B0 /* SNFileModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNFileModel.m; sourceTree = "<group>"; };
-		780E84382129B4D6001E98B0 /* SNFileExplorerLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNFileExplorerLoadingView.m; sourceTree = "<group>"; };
-		780E843F2129B6D2001E98B0 /* SNFileExplorer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SNFileExplorer.h; sourceTree = "<group>"; };
 		785B0F7B20B3E77E0003162B /* XXBExplorerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XXBExplorerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		785B0F7E20B3E77F0003162B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		785B0F7F20B3E77F0003162B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -68,41 +52,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		780E842E2129B4D6001E98B0 /* SNFileExplorer */ = {
-			isa = PBXGroup;
-			children = (
-				780E843F2129B6D2001E98B0 /* SNFileExplorer.h */,
-				780E84402129B76D001E98B0 /* Util */,
-				780E843E2129B692001E98B0 /* UI */,
-			);
-			name = SNFileExplorer;
-			path = ../../SNFileExplorer;
-			sourceTree = "<group>";
-		};
-		780E843E2129B692001E98B0 /* UI */ = {
-			isa = PBXGroup;
-			children = (
-				780E84302129B4D6001E98B0 /* SNFileExplorerController.h */,
-				780E84352129B4D6001E98B0 /* SNFileExplorerController.m */,
-				780E84382129B4D6001E98B0 /* SNFileExplorerLoadingView.m */,
-				780E84322129B4D6001E98B0 /* SNFileExplorerLoadingView.h */,
-				780E842F2129B4D6001E98B0 /* SNFileCell.h */,
-				780E84342129B4D6001E98B0 /* SNFileCell.m */,
-				780E84332129B4D6001E98B0 /* SNFileModel.h */,
-				780E84372129B4D6001E98B0 /* SNFileModel.m */,
-			);
-			path = UI;
-			sourceTree = "<group>";
-		};
-		780E84402129B76D001E98B0 /* Util */ = {
-			isa = PBXGroup;
-			children = (
-				780E84362129B4D6001E98B0 /* SNFileExplorerUtils.h */,
-				780E84312129B4D6001E98B0 /* SNFileExplorerUtils.m */,
-			);
-			path = Util;
-			sourceTree = "<group>";
-		};
 		785B0F7220B3E77E0003162B = {
 			isa = PBXGroup;
 			children = (
@@ -124,7 +73,6 @@
 		785B0F7D20B3E77E0003162B /* XXBExplorerDemo */ = {
 			isa = PBXGroup;
 			children = (
-				780E842E2129B4D6001E98B0 /* SNFileExplorer */,
 				785B0F7E20B3E77F0003162B /* AppDelegate.h */,
 				785B0F7F20B3E77F0003162B /* AppDelegate.m */,
 				785B0F8120B3E77F0003162B /* ViewController.h */,
@@ -272,13 +220,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				785B0F8320B3E77F0003162B /* ViewController.m in Sources */,
-				780E843D2129B4D6001E98B0 /* SNFileExplorerLoadingView.m in Sources */,
 				785B0F8E20B3E7800003162B /* main.m in Sources */,
 				785B0F8020B3E77F0003162B /* AppDelegate.m in Sources */,
-				780E843C2129B4D6001E98B0 /* SNFileModel.m in Sources */,
-				780E843B2129B4D6001E98B0 /* SNFileExplorerController.m in Sources */,
-				780E84392129B4D6001E98B0 /* SNFileExplorerUtils.m in Sources */,
-				780E843A2129B4D6001E98B0 /* SNFileCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
