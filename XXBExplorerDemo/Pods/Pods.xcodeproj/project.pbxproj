@@ -332,28 +332,6 @@
 			};
 			name = Release;
 		};
-		5062D191EE086486AC1E21E8B29163E9 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5F26A2D5302D88F2C07FDBF498773D2A /* SNFileExplorer.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				GCC_PREFIX_HEADER = "Target Support Files/SNFileExplorer/SNFileExplorer-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PRIVATE_HEADERS_FOLDER_PATH = "";
-				PUBLIC_HEADERS_FOLDER_PATH = "";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
 		A20B0BDFC4838E55DCAD094ED2792393 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -475,6 +453,49 @@
 			};
 			name = Debug;
 		};
+		C31DE5C130CDE6FA7C758F3CF6E8DDE8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5F26A2D5302D88F2C07FDBF498773D2A /* SNFileExplorer.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				GCC_PREFIX_HEADER = "Target Support Files/SNFileExplorer/SNFileExplorer-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRIVATE_HEADERS_FOLDER_PATH = "";
+				PUBLIC_HEADERS_FOLDER_PATH = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C436CE6BD60A703342F09A15B4C68480 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5F26A2D5302D88F2C07FDBF498773D2A /* SNFileExplorer.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				GCC_PREFIX_HEADER = "Target Support Files/SNFileExplorer/SNFileExplorer-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRIVATE_HEADERS_FOLDER_PATH = "";
+				PUBLIC_HEADERS_FOLDER_PATH = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		E20C065BD5C705CCE3D659C7FB59E26C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A0C418F730EFC762AB8505B8A548F7F2 /* Pods-XXBExplorerDemo.debug.xcconfig */;
@@ -496,35 +517,14 @@
 			};
 			name = Debug;
 		};
-		EC69EDB0FFAB8A9EEABEFA451D2025D9 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5F26A2D5302D88F2C07FDBF498773D2A /* SNFileExplorer.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				GCC_PREFIX_HEADER = "Target Support Files/SNFileExplorer/SNFileExplorer-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PRIVATE_HEADERS_FOLDER_PATH = "";
-				PUBLIC_HEADERS_FOLDER_PATH = "";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
 		02CAE64A14B55EB498053BCDDA1DF8B9 /* Build configuration list for PBXNativeTarget "SNFileExplorer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				EC69EDB0FFAB8A9EEABEFA451D2025D9 /* Debug */,
-				5062D191EE086486AC1E21E8B29163E9 /* Release */,
+				C31DE5C130CDE6FA7C758F3CF6E8DDE8 /* Debug */,
+				C436CE6BD60A703342F09A15B4C68480 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

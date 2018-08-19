@@ -9,7 +9,7 @@
     "杨小兵": "xiaobing5@staff.sina.com.cn"
   },
   "platforms": {
-    "ios": "7.0"
+    "ios": "8.0"
   },
   "source": {
     "git": "https://github.com/sixTiger/XXBExplorer.git",
@@ -21,7 +21,7 @@
     {
       "name": "UI",
       "platforms": {
-        "ios": "7.0"
+        "ios": "8.0"
       },
       "source_files": "SNFileExplorer/UI/*.{h,m}",
       "public_header_files": "SNFileExplorer/UI/SNFileExplorerController.h"
@@ -29,7 +29,7 @@
     {
       "name": "Util",
       "platforms": {
-        "ios": "7.0"
+        "ios": "8.0"
       },
       "source_files": "SNFileExplorer/Util/*.{h,m}",
       "public_header_files": "SNFileExplorer/Util/*.h"
