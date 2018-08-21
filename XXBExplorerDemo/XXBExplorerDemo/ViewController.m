@@ -41,6 +41,7 @@
     NSString *testFinderPath = [documentPath stringByAppendingPathComponent:@"test"];
     NSString *testTilePath0 = [testFinderPath stringByAppendingPathComponent:@"test.txt"];
     NSString *testTilePath1 = [testFinderPath stringByAppendingPathComponent:@"dict.plist"];
+    NSString *testTilePath2 = [testFinderPath stringByAppendingPathComponent:@"arry.plist"];
     
     [fileManager createDirectoryAtPath:testFinderPath withIntermediateDirectories:YES attributes:nil error:nil];
     
@@ -52,5 +53,8 @@
                            @"array":@[@"a",@"b",@"c"]
                            };
     [dict writeToFile:testTilePath1 atomically:YES];
+    
+    NSArray *array = @[@(1),@(2),@(3)];
+    [array writeToFile:testTilePath2 atomically:YES];
 }
 @end

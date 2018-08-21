@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+@class SNFileModel;
 
 typedef enum : NSUInteger {
     SNFileTypeUnknown,     //文件不存在
@@ -67,4 +68,12 @@ extern BOOL deleteFail_XXBFE(NSString *path, NSError **error);
 
 @interface SNFileExplorerUtils : NSObject
 
+
+/**
+ 分享文件
+
+ @param fileModel 要分享的文件
+ @param controller 分享这个文件的controller
+ */
++ (void)shareFile:(SNFileModel *)fileModel withController:(UIViewController *)controller;
 @end

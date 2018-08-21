@@ -7,6 +7,7 @@
 //
 
 #import "SNFileExplorerUtils.h"
+#import "SNFileModel.h"
 
 /**
  判断对象是否为空
@@ -102,4 +103,16 @@ extern BOOL deleteFail_XXBFE(NSString *path, NSError **error) {
 
 @implementation SNFileExplorerUtils
 
+/**
+ 分享文件
+ 
+ @param fileModel 要分享的文件
+ @param controller 分享这个文件的controller
+ */
++ (void)shareFile:(SNFileModel *)fileModel withController:(UIViewController *)controller {
+    NSURL *url = [NSURL fileURLWithPath:fileModel.currentPath];
+    NSArray *items = [NSArray arrayWithObject:url];
+    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:items applicationActivities:nil];
+    [controller presentViewController:activityViewController animated:YES completion:nil];
+}
 @end

@@ -10,6 +10,7 @@
 #import "SNFileModel.h"
 #import "SNFileCell.h"
 #import "SNFileExplorerLoadingView.h"
+#import "SNFileDisplayController.h"
 
 @interface SNFileExplorerController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -17,8 +18,6 @@
 @property(nonatomic, weak) SNFileExplorerLoadingView        *loadingView;
 @property(nonatomic, strong) SNFileModel                    *rootFileModel;
 @property(nonatomic, strong) SNFileModel                    *fileModel;
-
-
 @end
 
 @implementation SNFileExplorerController
@@ -74,10 +73,13 @@ static NSString *SNFileCellID = @"SNFileCellID";
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    SNFileModel *fileModel = self.fileModel.subFileModels[indexPath.row];
-    if (fileModel.fileType == SNFileTypeFinder) {
-        self.fileModel = self.fileModel.subFileModels[indexPath.row];
+    SNFileModel *clickedFileModel = self.fileModel.subFileModels[indexPath.row];
+    if (clickedFileModel.fileType == SNFileTypeFinder) {
+        self.fileModel = clickedFileModel;
         [self reloadResource];
+    } else {
+        SNFileDisplayController *fileDisplayController = [[SNFileDisplayController alloc] initWithFileModel:clickedFileModel];
+        [self.navigationController pushViewController:fileDisplayController animated:YES];
     }
 }
 
@@ -85,7 +87,7 @@ static NSString *SNFileCellID = @"SNFileCellID";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SNFileCell *cell = (SNFileCell *)[tableView dequeueReusableCellWithIdentifier:SNFileCellID];
-    cell.backgroundColor = [UIColor colorWithRed:arc4random_uniform(255)/255.0 green:arc4random_uniform(255)/255.0 blue:arc4random_uniform(255)/255.0 alpha:0.5];
+    cell.backgroundColor = [UIColor colorWithRed:arc4random_uniform(255)/255.0 green:arc4random_uniform(255)/255.0 blue:arc4random_uniform(255)/255.0 alpha:0.2];
     cell.fileModel = self.fileModel.subFileModels[indexPath.row];
     return cell;
 }
@@ -117,12 +119,34 @@ static NSString *SNFileCellID = @"SNFileCellID";
         [strongSelf deleteFileWithCellIndexpath:indexPath];
         
     }];
+    
+    // 查看文件详细信息
+    UITableViewRowAction *detailFileAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"详情"handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf detailFileWithCellIndexpath:indexPath];
+        
+    }];
   
     delegateFileAction.backgroundColor = [UIColor redColor];
     // 将设置好的按钮放到数组中返回
-    return @[shareFileAction, delegateFileAction];
+    return @[shareFileAction, delegateFileAction, detailFileAction];
 }
 
+/**
+ 分享文件
+
+ @param indexPath 点击的cell的indexPath
+ */
+- (void)shareFileWithCellIndexpath:(NSIndexPath *)indexPath {
+    SNFileModel *fileModel = self.fileModel.subFileModels[indexPath.row];
+    [SNFileExplorerUtils shareFile:fileModel withController:self];
+}
+
+/**
+ 删除文件
+ 
+ @param indexPath 点击的cell的indexPath
+ */
 - (void)deleteFileWithCellIndexpath:(NSIndexPath *)indexPath {
     SNFileModel *fileModel = self.fileModel.subFileModels[indexPath.row];
     
@@ -146,14 +170,28 @@ static NSString *SNFileCellID = @"SNFileCellID";
 }
 
 
-- (void)shareFileWithCellIndexpath:(NSIndexPath *)indexPath {
+/**
+ 查看文件的详细
+ 
+ @param indexPath 点击的cell的indexPath
+ */
+- (void)detailFileWithCellIndexpath:(NSIndexPath *)indexPath {
+    [self.loadingView startAnimating];
     SNFileModel *fileModel = self.fileModel.subFileModels[indexPath.row];
-    NSURL *url = [NSURL fileURLWithPath:fileModel.currentPath];
-    NSArray *items = [NSArray arrayWithObject:url];
-    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:items applicationActivities:nil];
-    [self presentViewController:activityViewController animated:YES completion:nil];
+    
+    [fileModel loadDetail:^(BOOL finish, NSDictionary *message) {
+        [self.loadingView stopAnimating];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:fileModel.currentName message:[NSString stringWithFormat:@"%@",message] preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *ok = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        }];
+        [alertController addAction:ok];
+        [self presentViewController:alertController animated:YES completion:^{
+        }];
+    }];
 }
 
 - (void)dealloc {
+    
 }
 @end

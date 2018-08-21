@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -15,6 +15,8 @@
 		61573517A86CEAA8E94A8C807C8CBEC2 /* SNFileModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 169185EB67B788731A8A55E5615D6517 /* SNFileModel.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		68FA392155EC9C74C82169C8549B0CB3 /* SNFileModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AD81892F998D403ADB6E0D3860B56FB9 /* SNFileModel.m */; };
 		6AF2C92AC899B1932938D0060C7A776F /* SNFileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B947B4B3458363225D104699A2208DD /* SNFileCell.m */; };
+		78970CD8212BC0E300FD9C24 /* SNFileDisplayController.h in Headers */ = {isa = PBXBuildFile; fileRef = 78970CD6212BC0E300FD9C24 /* SNFileDisplayController.h */; };
+		78970CD9212BC0E300FD9C24 /* SNFileDisplayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78970CD7212BC0E300FD9C24 /* SNFileDisplayController.m */; };
 		7C4C0897F818DB4E8B79389227C15D00 /* SNFileExplorerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08661B93C1583E896DD31ACC055896BC /* SNFileExplorerController.m */; };
 		89E2515C85792530BA2481492C0BE4B3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
 		AA11B2764EAE7404DB6957C8080F1418 /* SNFileExplorer-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = AB640F8E9CA92AE50912A8FA01CE461A /* SNFileExplorer-dummy.m */; };
@@ -46,8 +48,10 @@
 		5F26A2D5302D88F2C07FDBF498773D2A /* SNFileExplorer.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SNFileExplorer.xcconfig; sourceTree = "<group>"; };
 		6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		71615F627C3EAAF8E457ECAA774E5B18 /* Pods-XXBExplorerDemo-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-XXBExplorerDemo-resources.sh"; sourceTree = "<group>"; };
-		7D89AD7C410FF76BA717AD11A43405F9 /* libPods-XXBExplorerDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-XXBExplorerDemo.a"; path = "libPods-XXBExplorerDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		78970CD6212BC0E300FD9C24 /* SNFileDisplayController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SNFileDisplayController.h; path = SNFileExplorer/UI/SNFileDisplayController.h; sourceTree = "<group>"; };
+		78970CD7212BC0E300FD9C24 /* SNFileDisplayController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = SNFileDisplayController.m; path = SNFileExplorer/UI/SNFileDisplayController.m; sourceTree = "<group>"; };
+		7D89AD7C410FF76BA717AD11A43405F9 /* libPods-XXBExplorerDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XXBExplorerDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9B947B4B3458363225D104699A2208DD /* SNFileCell.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SNFileCell.m; path = SNFileExplorer/UI/SNFileCell.m; sourceTree = "<group>"; };
 		A0C418F730EFC762AB8505B8A548F7F2 /* Pods-XXBExplorerDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-XXBExplorerDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		AB640F8E9CA92AE50912A8FA01CE461A /* SNFileExplorer-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SNFileExplorer-dummy.m"; sourceTree = "<group>"; };
@@ -56,7 +60,7 @@
 		CEBC70989A23ED5B17ECD6B5F7BC3486 /* SNFileExplorerController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SNFileExplorerController.h; path = SNFileExplorer/UI/SNFileExplorerController.h; sourceTree = "<group>"; };
 		DC438F11B45F69D6000D5510A97E8FCF /* Pods-XXBExplorerDemo-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-XXBExplorerDemo-frameworks.sh"; sourceTree = "<group>"; };
 		DEB30E8077C68AA460E590AD6A440A53 /* SNFileCell.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SNFileCell.h; path = SNFileExplorer/UI/SNFileCell.h; sourceTree = "<group>"; };
-		E27B78A055C8E313B595BCC3FDDEE7C6 /* libSNFileExplorer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libSNFileExplorer.a; path = libSNFileExplorer.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		E27B78A055C8E313B595BCC3FDDEE7C6 /* libSNFileExplorer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSNFileExplorer.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6503F8F5D8553F9C24AA771F23534B2 /* SNFileExplorerLoadingView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SNFileExplorerLoadingView.h; path = SNFileExplorer/UI/SNFileExplorerLoadingView.h; sourceTree = "<group>"; };
 		F41C21AA122D892C4398562253050846 /* SNFileExplorerLoadingView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SNFileExplorerLoadingView.m; path = SNFileExplorer/UI/SNFileExplorerLoadingView.m; sourceTree = "<group>"; };
 		F9E1DC2E7A5FFFD4086CE5C3FC0FAFF3 /* Pods-XXBExplorerDemo-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-XXBExplorerDemo-dummy.m"; sourceTree = "<group>"; };
@@ -102,6 +106,8 @@
 				F41C21AA122D892C4398562253050846 /* SNFileExplorerLoadingView.m */,
 				169185EB67B788731A8A55E5615D6517 /* SNFileModel.h */,
 				AD81892F998D403ADB6E0D3860B56FB9 /* SNFileModel.m */,
+				78970CD6212BC0E300FD9C24 /* SNFileDisplayController.h */,
+				78970CD7212BC0E300FD9C24 /* SNFileDisplayController.m */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -204,6 +210,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				329B36F5599D2D0C9315E776E30ADACD /* SNFileCell.h in Headers */,
+				78970CD8212BC0E300FD9C24 /* SNFileDisplayController.h in Headers */,
 				E8DAB4D34A3045670D547984435B3C0E /* SNFileExplorer.h in Headers */,
 				F19AAFA20401DCE54BA5766B15079E72 /* SNFileExplorerController.h in Headers */,
 				42A5CC0646D5D3F45F7D4276F6CA7C58 /* SNFileExplorerLoadingView.h in Headers */,
@@ -283,6 +290,7 @@
 			files = (
 				6AF2C92AC899B1932938D0060C7A776F /* SNFileCell.m in Sources */,
 				AA11B2764EAE7404DB6957C8080F1418 /* SNFileExplorer-dummy.m in Sources */,
+				78970CD9212BC0E300FD9C24 /* SNFileDisplayController.m in Sources */,
 				7C4C0897F818DB4E8B79389227C15D00 /* SNFileExplorerController.m in Sources */,
 				4F7BE8BCAE4819A2849B7547B030B955 /* SNFileExplorerLoadingView.m in Sources */,
 				D63AE547B3F17F80A095722DEC67AF7F /* SNFileExplorerUtils.m in Sources */,
