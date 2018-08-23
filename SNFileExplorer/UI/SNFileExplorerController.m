@@ -82,6 +82,7 @@ static NSString *SNFileCellID = @"SNFileCellID";
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf.loadingView stopAnimating];
         [strongSelf.tableView reloadData];
+        [strongSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
     }];
 }
 
