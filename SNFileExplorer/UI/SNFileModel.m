@@ -7,7 +7,12 @@
 //
 
 #import "SNFileModel.h"
+#import "SNFileExplorerUtils.h"
 
+@interface SNFileModel()
+@property(nonatomic, assign) BOOL isLoadingSize;
+
+@end
 @implementation SNFileModel
 
 - (instancetype)initWithPath:(NSString *)filePath andName:(NSString *)fileName andSuperFileMode:(SNFileModel *)superFileModel {
@@ -83,71 +88,24 @@
 }
 
 - (NSString *)readableSize {
+    unsigned long long fileSize = self.realSize > 0 ? self.realSize : self.size;
     NSString *readableSizeString = @"NO SIZE";
-    if( _size < 0 && _currentName ) {
+    if( fileSize < 0 && _currentName ) {
         readableSizeString = @"TMF";
-    }  else if( _size < 1024 ) {
-        readableSizeString = [NSString stringWithFormat:@"%db", (int)_size];
-    } else if( _size < 1024 * 1024 ) {
-        readableSizeString = [NSString stringWithFormat:@"%.1fK", (CGFloat)_size / 1024];
-    } else if( _size < 1024 * 1024 * 1024 ) {
-        readableSizeString = [NSString stringWithFormat:@"%.1fM", (CGFloat)_size / (1024 * 1024)];
+    }  else if( fileSize < 1024 ) {
+        readableSizeString = [NSString stringWithFormat:@"%db", (unsigned long long)fileSize];
+    } else if( fileSize < 1024 * 1024 ) {
+        readableSizeString = [NSString stringWithFormat:@"%.1lfK", (double)fileSize / 1024];
+    } else if( fileSize < 1024 * 1024 * 1024 ) {
+        readableSizeString = [NSString stringWithFormat:@"%.1lfM", (double)fileSize / (1024 * 1024)];
     } else {
-        readableSizeString = [NSString stringWithFormat:@"%.1fG", (CGFloat)_size / (1024 * 1024 * 1024)];
+        readableSizeString = [NSString stringWithFormat:@"%.1lfG", (double)fileSize / (1024 * 1024 * 1024)];
     }
     return readableSizeString;
 }
 
 - (void)loadDetail:(void (^)(BOOL, NSDictionary *))completion {
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        
-//        /**
-//         父级目录信息
-//         */
-//        @property(nonatomic, weak) SNFileModel                          *superFileModel;
-//
-//        /**
-//         当前模型的类型
-//         */
-//        @property(nonatomic, assign) SNFileModelType                    modelType;
-//
-//
-//        /**
-//         当前模型的文件类型
-//         */
-//        @property(nonatomic, assign) SNFileType                         fileType;
-//
-//        /**
-//         当前的module的标示
-//         */
-//        @property(nonatomic, assign) NSInteger                          tag;
-//
-//        /**
-//         子目录
-//         */
-//        @property(nonatomic, strong) NSMutableArray<SNFileModel *>      *subFileModels;
-//
-//
-//        /**
-//         可读尺寸(..Mb)
-//         */
-//        @property (nonatomic, readonly) NSString                        *readableSize;
-//
-//        /**
-//         创建日期
-//         */
-//        @property (nonatomic, copy) NSDate                              *createDate;
-//
-//        /**
-//         修改日期
-//         */
-//        @property (nonatomic, copy) NSDate                              *modifyDate;
-//
-//        /**
-//         扩展名
-//         */
-//        @property (nonatomic, copy) NSString                            *extension;
-        
         NSDictionary *message = @{
                                   @"currentName"    :   self.currentName,
                                   @"currentPath"    :   self.currentPath,
@@ -165,6 +123,37 @@
     });
 }
 
+/**
+ 获取文件的真实大小
+ 
+ @param completion 获取完成的回调
+ */
+- (void)loadFileSize:(void(^)(NSString *path, unsigned long long size))completion {
+    self.loadSizeCompletion = completion;
+    if (self.isLoadingSize) {
+        return;
+    }
+    self.isLoadingSize = YES;
+    if (self.realSize != 0) {
+        self.isLoadingSize = NO;
+        if (self.loadSizeCompletion != nil) {
+            self.loadSizeCompletion(self.currentPath, self.realSize);
+        }
+    } else {
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+            NSString *currentPath = self.currentPath;
+            self.realSize = getFileSize_XXBFE(self.currentPath);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.isLoadingSize = NO;
+                if (self.loadSizeCompletion != nil) {
+                    self.loadSizeCompletion(currentPath, self.realSize);
+                }
+            });
+        });
+    }
+}
+
+    
 - (NSString *)modifyDateString {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     dateFormatter.dateFormat = @"yyyy-MM-dd a HH:mm:ss EEEE";

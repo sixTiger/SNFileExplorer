@@ -10,11 +10,13 @@
 
 @interface SNFileCell()
 
-@property(nonatomic, weak) UILabel      *emojiLabel;
-@property(nonatomic, weak) UILabel      *messageLabel;
-@property(nonatomic, weak) UILabel      *subMessageLabel;
-@property(nonatomic, weak) UILabel      *sizeLabel;
-@property(nonatomic, weak) UILabel      *tagLabel;
+@property(nonatomic, weak) UILabel                      *emojiLabel;
+@property(nonatomic, weak) UILabel                      *messageLabel;
+@property(nonatomic, weak) UILabel                      *subMessageLabel;
+@property(nonatomic, weak) UILabel                      *sizeLabel;
+@property(nonatomic, weak) UILabel                      *tagLabel;
+@property(nonatomic, weak) UIActivityIndicatorView      *activityIndicatorView;
+
 @end
 
 @implementation SNFileCell
@@ -32,7 +34,7 @@
     _fileModel = fileModel;
     self.emojiLabel.text = getEmojiString_XXBFE(fileModel.fileType);
     self.messageLabel.text = fileModel.currentName;
-    self.sizeLabel.text = fileModel.readableSize;
+    self.sizeLabel.text = @"正在计算";
     self.tagLabel.text = fileModel.extension;
     switch (fileModel.modelType) {
         case SNFileModelTypeDefault:
@@ -58,6 +60,14 @@
         default:
             break;
     }
+    [self.activityIndicatorView startAnimating];
+    [self.fileModel loadFileSize:^(NSString *path, unsigned long long size) {
+        if ([self.fileModel.currentPath isEqualToString:path]) {
+            self.sizeLabel.text = fileModel.readableSize;
+            [self.activityIndicatorView stopAnimating];
+            [self setNeedsLayout];
+        }
+    }];
 }
 
 - (void)layoutSubviews {
@@ -93,6 +103,7 @@
     self.tagLabel.frame = CGRectMake(selfWidth - tagLabelWidth - 5, messageLabelCenterY - tagLabelHeight * 0.5, tagLabelWidth, tagLabelHeight);
     
     self.sizeLabel.frame = CGRectMake(selfWidth - sizeLabelWidth - 5, subMessageLabelCenterY - sizeLabelHeight * 0.5, sizeLabelWidth, sizeLabelHeight);
+    self.activityIndicatorView.center = self.sizeLabel.center;
 }
 
 - (void)loadFileMessage {
@@ -157,5 +168,15 @@
         _tagLabel = tagLabel;
     }
     return _tagLabel;
+}
+
+- (UIActivityIndicatorView *)activityIndicatorView {
+    if (_activityIndicatorView == nil) {
+        UIActivityIndicatorView *activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        activityIndicatorView.hidesWhenStopped = YES;
+        [self.contentView insertSubview:activityIndicatorView aboveSubview:self.sizeLabel];
+        _activityIndicatorView = activityIndicatorView;
+    }
+    return _activityIndicatorView;
 }
 @end

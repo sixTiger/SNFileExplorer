@@ -101,6 +101,48 @@ extern BOOL deleteFail_XXBFE(NSString *path, NSError **error) {
     return [fileManager removeItemAtPath:path error:error];
 }
 
+/**
+ 获取文件的真实大小
+ 
+ @param path 文件路径
+ @return 文件的真实大小
+ */
+extern unsigned long long getFileSize_XXBFE(NSString *path) {
+    NSFileManager *mgr = [NSFileManager defaultManager];
+    //判断字符串是否为文件/文件夹
+    BOOL dir = NO;
+    BOOL exists = [mgr fileExistsAtPath:path isDirectory:&dir];
+    //文件/文件夹不存在
+    if (exists == NO) {
+        return 0;
+    }
+    //path是文件夹
+    if (dir) {
+        //遍历文件夹中的所有内容
+        NSArray *subpaths = [mgr subpathsAtPath:path];
+        //计算文件夹大小
+        unsigned long long totalByteSize = 0;
+        for (NSString *subpath in subpaths) {
+            //拼接全路径
+            NSString *fullSubPath = [path stringByAppendingPathComponent:subpath];
+            //判断是否为文件
+            BOOL dir = NO;
+            [mgr fileExistsAtPath:fullSubPath isDirectory:&dir];
+            if (dir == NO){//是文件
+                NSDictionary *attr = [mgr attributesOfItemAtPath:fullSubPath error:nil];
+                totalByteSize += attr.fileSize;
+            } else {
+                //如果还是文件夹不需要处理
+                //例如 "Documents"是文件夹，会有"Documents/***"得子项再下边
+            }
+        }
+        return totalByteSize;
+    } else {
+        //是文件
+        NSDictionary *attr = [mgr attributesOfItemAtPath:path error:nil];
+        return attr.fileSize;
+    }
+}
 @implementation SNFileExplorerUtils
 
 /**

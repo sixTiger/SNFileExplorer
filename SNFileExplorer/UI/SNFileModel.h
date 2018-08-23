@@ -57,6 +57,12 @@ typedef enum : NSUInteger {
  */
 @property (nonatomic, assign) long long                         size;
 
+
+/**
+ 真实大小
+ */
+@property (nonatomic, assign) long long                         realSize;
+
 /**
  可读尺寸(..Mb)
  */
@@ -79,6 +85,7 @@ typedef enum : NSUInteger {
  */
 @property (nonatomic, copy) NSString                            *extension;
 
+@property(nonatomic, copy) void(^loadSizeCompletion)(NSString *path, unsigned long long size);
 
 /**
  SNFileModel 初始化
@@ -103,4 +110,12 @@ typedef enum : NSUInteger {
  @param completion 加载成功的block
  */
 - (void)loadDetail:(void(^)(BOOL finish, NSDictionary *message))completion;
+
+
+/**
+ 获取文件的真实大小
+
+ @param completion 获取完成的回调
+ */
+- (void)loadFileSize:(void(^)(NSString *path, unsigned long long size))completion ;
 @end

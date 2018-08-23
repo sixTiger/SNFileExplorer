@@ -66,6 +66,14 @@ extern NSArray* getSubFilesFromPath_XXBFE(NSString *path, NSError **error);
  */
 extern BOOL deleteFail_XXBFE(NSString *path, NSError **error);
 
+/**
+ 获取文件的真实大小
+ 
+ @param path 文件路径
+ @return 文件的真实大小
+ */
+extern unsigned long long getFileSize_XXBFE(NSString *path);
+
 @interface SNFileExplorerUtils : NSObject
 
 
