@@ -18,7 +18,7 @@
 @property(nonatomic, weak) SNFileExplorerLoadingView    *loadingView;
 @property(nonatomic, weak) UITextView                   *textView;
 @property(nonatomic, weak) UIButton                     *otherAppOpenButton;
-
+@property(nonatomic, weak) UIImageView                  *imageView;
 @end
 
 @implementation SNFileDisplayController
@@ -33,8 +33,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [self initNavi];
     [self initView];
-    
     [self loadFile];
 }
 
@@ -45,24 +45,21 @@
 
 - (void)initView {
     self.view.backgroundColor = [UIColor whiteColor];
-    UITextView *textView = [[UITextView alloc] initWithFrame:self.view.bounds];
-    textView.editable = NO;
-    [self.view addSubview:textView];
-    _textView = textView;
     
     UIButton *otherAppOpenButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    otherAppOpenButton.frame = self.view.bounds;
+    otherAppOpenButton.autoresizingMask = (1 << 6) - 1;
     [otherAppOpenButton setTitle:@"其他应用打开" forState:UIControlStateNormal];
+    [otherAppOpenButton setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+    otherAppOpenButton.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     [otherAppOpenButton addTarget:self action:@selector(otherAppOpenButtonDidClick:) forControlEvents:UIControlEventTouchUpInside];
     otherAppOpenButton.hidden = YES;
     [self.view addSubview:otherAppOpenButton];
     _otherAppOpenButton = otherAppOpenButton;
-    
-    
-    SNFileExplorerLoadingView *loadingView = [[SNFileExplorerLoadingView alloc] initWithFrame:self.view.bounds];
-    [self.view addSubview:loadingView];
-    loadingView.autoresizingMask = (1 << 6) - 1;
-    loadingView.hidesWhenStopped = YES;
-    _loadingView = loadingView;
+}
+
+- (void)initNavi {
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(rightNaviDidClick)];
 }
 
 - (void)loadFile {
@@ -70,31 +67,27 @@
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         NSData *data = [NSData dataWithContentsOfFile:self.fileModel.currentPath];
         if (data) {
-            NSString *txtString = @"";
-            if ([self.fileModel.extension isEqualToString:@"txt"]) {
-                txtString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            if ([self.fileModel.extension isEqualToString:@"txt"] || [self.fileModel.extension isEqualToString:@"log"]) {
+                NSString *txtString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                [self updateText:txtString];
             } else if ([self.fileModel.extension isEqualToString:@"plist"]){
                 NSObject *object = [NSDictionary dictionaryWithContentsOfFile:self.fileModel.currentPath];
                 if (object == nil) {
                     object = [NSArray arrayWithContentsOfFile:self.fileModel.currentPath];
                 }
-                txtString = [NSString stringWithFormat:@"%@",object];
-            } else if ([self.fileModel.extension isEqualToString:@"log"]){
-                txtString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                NSString *txtString = [NSString stringWithFormat:@"%@",object];
+                [self updateText:txtString];
+            }  else if ([self.fileModel.extension isEqualToString:@"png"] || [self.fileModel.extension isEqualToString:@"jpg"]) {
+                UIImage *image = [UIImage imageWithContentsOfFile:self.fileModel.currentPath];
+                [self updateImage:image];
             } else {
                 //其他应用打开文件
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    self.otherAppOpenButton.hidden = NO;
-                });
+                [self openbyOtherApp];
             }
-            dispatch_async(dispatch_get_main_queue(), ^{
-                self.textView.text = txtString;
-            });
+           
         } else {
             //其他应用打开文件
-            dispatch_async(dispatch_get_main_queue(), ^{
-                self.otherAppOpenButton.hidden = NO;
-            });
+            [self openbyOtherApp];
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -103,9 +96,69 @@
     });
 }
 
+- (void)updateText:(NSString *)txtString {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.textView.text = txtString;
+    });
+}
+
+- (void)updateImage:(UIImage *)image {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.imageView.image = image;
+    });
+}
+
+- (void)rightNaviDidClick {
+    [SNFileExplorerUtils shareFile:self.fileModel withController:self];
+}
+
 - (void)otherAppOpenButtonDidClick:(UIButton *)clickedButton {
     if (clickedButton == self.otherAppOpenButton) {
         [SNFileExplorerUtils shareFile:self.fileModel withController:self];
     }
+}
+
+
+/**
+ 其他用用打开文件
+ */
+- (void)openbyOtherApp {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.otherAppOpenButton.hidden = NO;
+    });
+}
+
+- (SNFileExplorerLoadingView *)loadingView {
+    if (_loadingView == nil) {
+        SNFileExplorerLoadingView *loadingView = [[SNFileExplorerLoadingView alloc] initWithFrame:self.view.bounds];
+        loadingView.autoresizingMask = (1 << 6) - 1;
+        loadingView.hidesWhenStopped = YES;
+        [self.view addSubview:loadingView];
+        _loadingView = loadingView;
+    }
+    [self.view bringSubviewToFront:_loadingView];
+    return _loadingView;
+}
+
+- (UITextView *)textView {
+    if (_textView == nil) {
+        UITextView *textView = [[UITextView alloc] initWithFrame:self.view.bounds];
+        textView.editable = NO;
+        textView.autoresizingMask = (1 << 6) - 1;
+        [self.view insertSubview:textView belowSubview:self.loadingView];
+        _textView = textView;
+    }
+    return _textView;
+}
+
+- (UIImageView *)imageView {
+    if (_imageView == nil) {
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
+        imageView.backgroundColor = [UIColor colorWithRed:arc4random_uniform(255)/255.0 green:arc4random_uniform(255)/255.0 blue:arc4random_uniform(255)/255.0 alpha:0.2];
+        imageView.contentMode = UIViewContentModeCenter;
+        [self.view insertSubview:imageView belowSubview:self.loadingView];
+        _imageView = imageView;
+    }
+    return _imageView;
 }
 @end

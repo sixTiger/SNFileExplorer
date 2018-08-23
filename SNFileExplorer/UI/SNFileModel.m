@@ -49,6 +49,28 @@
             SNFileModel *fileModel = [[SNFileModel alloc] initWithPath:subFilePath andName:subFileName andSuperFileMode:self];
             [filesArray addObject:fileModel];
         }
+        [filesArray sortUsingComparator:^NSComparisonResult(SNFileModel *fileModel1, SNFileModel *fileModel2) {
+            if (fileModel1.modelType == fileModel2.modelType) {
+                //文件级别一样 按照文件夹，文件，未知排序
+                if (fileModel1.fileType == fileModel2.fileType) {
+                    //文件类型类型一样的话，按照文件名字排序
+                    return [fileModel1.currentName compare:fileModel2.currentName options:NSCaseInsensitiveSearch];
+                } else {
+                    if (fileModel1.fileType > fileModel2.fileType) {
+                        return NSOrderedAscending;
+                    } else {
+                        return NSOrderedDescending;
+                    }
+                }
+                
+            } else {
+                if (fileModel1.modelType > fileModel2.modelType) {
+                    return NSOrderedAscending;
+                } else {
+                    return NSOrderedDescending;
+                }
+            }
+        }];
         self.subFileModels = filesArray;
         dispatch_async(dispatch_get_main_queue(), ^{
             if (error) {

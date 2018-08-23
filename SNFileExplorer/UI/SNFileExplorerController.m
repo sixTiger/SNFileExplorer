@@ -38,8 +38,19 @@ static NSString *SNFileCellID = @"SNFileCellID";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self initNavi];
     [self initView];
     [self reloadResource];
+}
+
+- (void)initNavi {
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(hidenSelf)];
+}
+
+- (void)hidenSelf {
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+    }];
 }
 
 - (void)initView {
@@ -105,7 +116,7 @@ static NSString *SNFileCellID = @"SNFileCellID";
 }
 
 - (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
-    // 添加一个删除按钮
+    // 添加一个分享
     __weak typeof(self) weakSelf = self;
     UITableViewRowAction *shareFileAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"分享文件"handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
@@ -113,7 +124,7 @@ static NSString *SNFileCellID = @"SNFileCellID";
     }];
     shareFileAction.backgroundColor = [UIColor orangeColor];
     
-    // 修改资料按钮
+    // 删除文件
     UITableViewRowAction *delegateFileAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"删除"handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf deleteFileWithCellIndexpath:indexPath];
@@ -149,7 +160,9 @@ static NSString *SNFileCellID = @"SNFileCellID";
  */
 - (void)deleteFileWithCellIndexpath:(NSIndexPath *)indexPath {
     SNFileModel *fileModel = self.fileModel.subFileModels[indexPath.row];
-    
+    // 添加一个分享
+    // 删除文件
+    // 查看文件详细信息
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"删除文件?" message:fileModel.currentName preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *deleteFile = [UIAlertAction actionWithTitle:@"删除" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
         NSError *error = nil;
@@ -168,7 +181,6 @@ static NSString *SNFileCellID = @"SNFileCellID";
         
     }];
 }
-
 
 /**
  查看文件的详细
