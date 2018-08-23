@@ -31,6 +31,8 @@
     NSString *rootPath = @"/Users/xiaobing5/Desktop";
     rootPath = NSHomeDirectory();
     SNFileExplorerController *fileExplorerController = [[SNFileExplorerController alloc] initWithRootPath:rootPath];
+//    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:fileExplorerController];
+//    [self.navigationController presentViewController:nav animated:YES completion:nil];
     [self.navigationController pushViewController:fileExplorerController animated:YES];
 }
 

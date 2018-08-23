@@ -44,13 +44,17 @@ static NSString *SNFileCellID = @"SNFileCellID";
 }
 
 - (void)initNavi {
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(hidenSelf)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(hidenSelf)];
 }
 
 - (void)hidenSelf {
-    [self dismissViewControllerAnimated:YES completion:^{
-        
-    }];
+    if (self.presentingViewController == nil) {
+        [self.navigationController popViewControllerAnimated:YES];
+    } else {
+        [self dismissViewControllerAnimated:YES completion:^{
+            
+        }];
+    }
 }
 
 - (void)initView {
