@@ -113,10 +113,11 @@ static NSString *SNFileCellID = @"SNFileCellID";
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == 0) {
-        return NO;
-    } else {
+    SNFileModel *subFileModels = self.fileModel.subFileModels[indexPath.row];
+    if (subFileModels.modelType == SNFileModelTypeDefault) {
         return YES;
+    } else {
+        return NO;
     }
 }
 
