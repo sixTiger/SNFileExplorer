@@ -64,7 +64,14 @@ extern NSArray* getSubFilesFromPath_XXBFE(NSString *path, NSError **error);
  @param error error
  @return 删除成功/失败
  */
-extern BOOL deleteFail_XXBFE(NSString *path, NSError **error);
+extern BOOL deleteFile_XXBFE(NSString *path, NSError **error);
+
+/**
+ 删除文件 级联删除(这个从操作比较耗时，会遍历当前目录的所有z子目录，挨个删除)
+ 
+ @param path 文件路径
+ */
+extern void deleteFile_r_f_XXBFE(NSString *path);
 
 /**
  获取文件的真实大小

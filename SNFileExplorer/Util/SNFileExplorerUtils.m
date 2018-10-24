@@ -96,9 +96,39 @@ extern NSArray* getSubFilesFromPath_XXBFE(NSString *path, NSError **error) {
  @param error error
  @return 删除成功/失败
  */
-extern BOOL deleteFail_XXBFE(NSString *path, NSError **error) {
+extern BOOL deleteFile_XXBFE(NSString *path, NSError **error) {
     NSFileManager *fileManager = [NSFileManager defaultManager];
     return [fileManager removeItemAtPath:path error:error];
+}
+
+/**
+ 删除文件 级联删除(这个从操作比较耗时，会遍历当前目录的所有z子目录，挨个删除)
+ 
+ @param path 文件路径
+ */
+extern void deleteFile_r_f_XXBFE(NSString *path) {
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    //直接删除
+    [fileManager removeItemAtPath:path error:nil];
+    //判断字符串是否为文件/文件夹
+    BOOL dir = NO;
+    BOOL exists = [fileManager fileExistsAtPath:path isDirectory:&dir];
+    //文件/文件夹不存在
+    if (exists == NO) {
+        return;
+    }
+    //path是文件夹
+    if (dir) {
+        // 删除文件夹失败，删除文件夹里边的内容
+        //遍历文件夹中的所有内容
+        NSArray *subpaths = [fileManager subpathsAtPath:path];
+        //计算文件夹大小
+        for (NSString *subpath in subpaths) {
+            //拼接全路径
+            NSString *fullSubPath = [path stringByAppendingPathComponent:subpath];
+            [fileManager removeItemAtPath:fullSubPath error:nil];
+        }
+    }
 }
 
 /**
@@ -108,10 +138,10 @@ extern BOOL deleteFail_XXBFE(NSString *path, NSError **error) {
  @return 文件的真实大小
  */
 extern unsigned long long getFileSize_XXBFE(NSString *path) {
-    NSFileManager *mgr = [NSFileManager defaultManager];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
     //判断字符串是否为文件/文件夹
     BOOL dir = NO;
-    BOOL exists = [mgr fileExistsAtPath:path isDirectory:&dir];
+    BOOL exists = [fileManager fileExistsAtPath:path isDirectory:&dir];
     //文件/文件夹不存在
     if (exists == NO) {
         return 0;
@@ -119,7 +149,7 @@ extern unsigned long long getFileSize_XXBFE(NSString *path) {
     //path是文件夹
     if (dir) {
         //遍历文件夹中的所有内容
-        NSArray *subpaths = [mgr subpathsAtPath:path];
+        NSArray *subpaths = [fileManager subpathsAtPath:path];
         //计算文件夹大小
         unsigned long long totalByteSize = 0;
         for (NSString *subpath in subpaths) {
@@ -127,9 +157,9 @@ extern unsigned long long getFileSize_XXBFE(NSString *path) {
             NSString *fullSubPath = [path stringByAppendingPathComponent:subpath];
             //判断是否为文件
             BOOL dir = NO;
-            [mgr fileExistsAtPath:fullSubPath isDirectory:&dir];
+            [fileManager fileExistsAtPath:fullSubPath isDirectory:&dir];
             if (dir == NO){//是文件
-                NSDictionary *attr = [mgr attributesOfItemAtPath:fullSubPath error:nil];
+                NSDictionary *attr = [fileManager attributesOfItemAtPath:fullSubPath error:nil];
                 totalByteSize += attr.fileSize;
             } else {
                 //如果还是文件夹不需要处理
@@ -139,7 +169,7 @@ extern unsigned long long getFileSize_XXBFE(NSString *path) {
         return totalByteSize;
     } else {
         //是文件
-        NSDictionary *attr = [mgr attributesOfItemAtPath:path error:nil];
+        NSDictionary *attr = [fileManager attributesOfItemAtPath:path error:nil];
         return attr.fileSize;
     }
 }

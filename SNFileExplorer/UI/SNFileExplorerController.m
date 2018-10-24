@@ -44,7 +44,12 @@ static NSString *SNFileCellID = @"SNFileCellID";
 }
 
 - (void)initNavi {
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(hidenSelf)];
+    UIBarButtonItem *doneButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(hidenSelf)];
+    UIBarButtonItem *deleteAllFileButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(deleteAllFile)];
+    self.navigationItem.rightBarButtonItems = @[
+                                                doneButtonItem,
+                                                deleteAllFileButtonItem
+                                                ];
 }
 
 - (void)hidenSelf {
@@ -55,6 +60,30 @@ static NSString *SNFileCellID = @"SNFileCellID";
             
         }];
     }
+}
+
+- (void)deleteAllFile {
+    __weak typeof(self) weakSelf = self;
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"确认删除文件?" message:@"删除当前目录下所有的可以删除的文件" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *deleteFile = [UIAlertAction actionWithTitle:@"删除" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf.loadingView startAnimating];
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+            deleteFile_r_f_XXBFE(strongSelf.fileModel.currentPath);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [strongSelf.loadingView stopAnimating];
+            });
+        });
+    }];
+    [alertController addAction:deleteFile];
+    
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    }];
+    [alertController addAction:cancel];
+    
+    [self presentViewController:alertController animated:YES completion:^{
+        
+    }];
 }
 
 - (void)initView {
@@ -172,7 +201,7 @@ static NSString *SNFileCellID = @"SNFileCellID";
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"删除文件?" message:fileModel.currentName preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *deleteFile = [UIAlertAction actionWithTitle:@"删除" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
         NSError *error = nil;
-        if (deleteFail_XXBFE(fileModel.currentPath, &error)) {
+        if (deleteFile_XXBFE(fileModel.currentPath, &error)) {
             [self.fileModel.subFileModels removeObjectAtIndex:indexPath.row];
             [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationBottom];
         }
