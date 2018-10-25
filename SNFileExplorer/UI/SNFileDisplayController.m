@@ -9,7 +9,7 @@
 #import "SNFileModel.h"
 #import "SNFileExplorerLoadingView.h"
 
-@interface SNFileDisplayController ()
+@interface SNFileDisplayController ()<UIWebViewDelegate>
 
 /**
  要打开的文件的详细信息
@@ -19,6 +19,7 @@
 @property(nonatomic, weak) UITextView                   *textView;
 @property(nonatomic, weak) UIButton                     *otherAppOpenButton;
 @property(nonatomic, weak) UIImageView                  *imageView;
+@property(nonatomic, weak) UIWebView                    *webview;
 @end
 
 @implementation SNFileDisplayController
@@ -82,12 +83,12 @@
                 [self updateImage:image];
             } else {
                 //其他应用打开文件
-                [self openbyOtherApp];
+                [self openByWebView];
             }
-           
+            
         } else {
             //其他应用打开文件
-            [self openbyOtherApp];
+            [self openByWebView];
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -118,6 +119,17 @@
     }
 }
 
+
+/**
+ 用webview打开文件
+ */
+- (void)openByWebView {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSURL *url = [NSURL fileURLWithPath:self.fileModel.currentPath];
+        NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+        [self.webview loadRequest:request];
+    });
+}
 
 /**
  其他用用打开文件
@@ -160,5 +172,20 @@
         _imageView = imageView;
     }
     return _imageView;
+}
+
+- (UIWebView *)webview {
+    if (_webview == nil) {
+        UIWebView *webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
+        webView.delegate = self;
+        [self.view addSubview:webView];
+        _webview = webView;
+    }
+    return _webview;
+}
+
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
+    webView.hidden = YES;
+    [self openbyOtherApp];
 }
 @end
