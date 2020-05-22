@@ -156,6 +156,7 @@
 - (UITextView *)textView {
     if (_textView == nil) {
         UITextView *textView = [[UITextView alloc] initWithFrame:self.view.bounds];
+        textView.alwaysBounceVertical = YES;
         textView.editable = NO;
         textView.autoresizingMask = (1 << 6) - 1;
         [self.view insertSubview:textView belowSubview:self.loadingView];
