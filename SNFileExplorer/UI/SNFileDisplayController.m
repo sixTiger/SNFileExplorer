@@ -8,8 +8,9 @@
 #import "SNFileDisplayController.h"
 #import "SNFileModel.h"
 #import "SNFileExplorerLoadingView.h"
+#import <WebKit/WebKit.h>
 
-@interface SNFileDisplayController ()<UIWebViewDelegate>
+@interface SNFileDisplayController ()<WKNavigationDelegate>
 
 /**
  要打开的文件的详细信息
@@ -19,7 +20,7 @@
 @property(nonatomic, weak) UITextView                   *textView;
 @property(nonatomic, weak) UIButton                     *otherAppOpenButton;
 @property(nonatomic, weak) UIImageView                  *imageView;
-@property(nonatomic, weak) UIWebView                    *webview;
+@property(nonatomic, weak) WKWebView                    *webview;
 @end
 
 @implementation SNFileDisplayController
@@ -174,18 +175,23 @@
     return _imageView;
 }
 
-- (UIWebView *)webview {
+- (WKWebView *)webview {
     if (_webview == nil) {
-        UIWebView *webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
-        webView.delegate = self;
+        WKWebView *webView = [[WKWebView alloc] initWithFrame:self.view.bounds];
+        webView.navigationDelegate = self;
+        webView.autoresizingMask = (1 << 6) - 1;
         [self.view addSubview:webView];
         _webview = webView;
     }
     return _webview;
 }
 
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
+- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(null_unspecified WKNavigation *)navigation withError:(NSError *)error {
     webView.hidden = YES;
     [self openbyOtherApp];
+}
+
+- (void)dealloc {
+    
 }
 @end

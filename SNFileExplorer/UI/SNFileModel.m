@@ -93,7 +93,7 @@
     if( fileSize < 0 && _currentName ) {
         readableSizeString = @"TMF";
     }  else if( fileSize < 1024 ) {
-        readableSizeString = [NSString stringWithFormat:@"%db", (unsigned long long)fileSize];
+        readableSizeString = [NSString stringWithFormat:@"%llub", (unsigned long long)fileSize];
     } else if( fileSize < 1024 * 1024 ) {
         readableSizeString = [NSString stringWithFormat:@"%.1lfK", (double)fileSize / 1024];
     } else if( fileSize < 1024 * 1024 * 1024 ) {

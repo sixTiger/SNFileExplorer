@@ -61,11 +61,13 @@
             break;
     }
     [self.activityIndicatorView startAnimating];
+    __weak typeof(self) weakSelf = self;
     [self.fileModel loadFileSize:^(NSString *path, unsigned long long size) {
-        if ([self.fileModel.currentPath isEqualToString:path]) {
-            self.sizeLabel.text = fileModel.readableSize;
-            [self.activityIndicatorView stopAnimating];
-            [self setNeedsLayout];
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if ([strongSelf.fileModel.currentPath isEqualToString:path]) {
+            strongSelf.sizeLabel.text = fileModel.readableSize;
+            [strongSelf.activityIndicatorView stopAnimating];
+            [strongSelf setNeedsLayout];
         }
     }];
 }

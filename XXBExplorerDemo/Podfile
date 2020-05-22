@@ -7,4 +7,5 @@ target 'XXBExplorerDemo' do
 
   # Pods for XXBExplorerDemo
  pod 'SNFileExplorer',:path => "../"
+ pod 'MLeaksFinder'
 end
